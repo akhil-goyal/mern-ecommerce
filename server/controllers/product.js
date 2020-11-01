@@ -22,48 +22,50 @@ exports.read = (req, res) => {
 }
 
 exports.create = (req, res) => {
-    let form = new formidable.IncomingForm()
-    form.keepExtensions = true
+    let form = new formidable.IncomingForm();
+    form.keepExtensions = true;
     form.parse(req, (err, fields, files) => {
         if (err) {
             return res.status(400).json({
-                error: 'Error while uploading image'
-            })
+                error: 'Image could not be uploaded'
+            });
         }
-
-        const { name, description, price, category, quantity, shipping } = fields
+        // check for all fields
+        const { name, description, price, category, quantity, shipping } = fields;
 
         if (!name || !description || !price || !category || !quantity || !shipping) {
             return res.status(400).json({
-                error: "All fields are mandatory!"
-            })
+                error: 'All fields are required'
+            });
         }
 
-        let product = new Product(fields)
+        let product = new Product(fields);
+
+        // 1kb = 1000
+        // 1mb = 1000000
 
         if (files.photo) {
-
-            if (files.photo.size > 1000000) {
+            // console.log("FILES PHOTO: ", files.photo);
+            if (files.photo.size > 20000000) {
                 return res.status(400).json({
-                    error: "Error! Image should be less than 1 Mb in size."
-                })
+                    error: 'Image should be less than 20mb in size'
+                });
             }
-
-            product.photo.data = fs.readFileSync(files.photo.path)
-            product.photo.contentType = files.photo.type
+            product.photo.data = fs.readFileSync(files.photo.path);
+            product.photo.contentType = files.photo.type;
         }
 
         product.save((err, result) => {
             if (err) {
+                console.log('PRODUCT CREATE ERROR ', err);
                 return res.status(400).json({
                     error: errorHandler(err)
-                })
+                });
             }
             res.json(result);
-        })
-
-    })
-}
+        });
+    });
+};
 
 exports.remove = (req, res) => {
     let product = req.product
@@ -228,9 +230,9 @@ exports.listBySearch = (req, res) => {
         });
 };
 
-exports.photo = (req,res, next) => {
+exports.photo = (req, res, next) => {
 
-    if(req.product.photo.data){
+    if (req.product.photo.data) {
         res.set('Content-Type', req.product.photo.contentType)
         return res.send(req.product.photo.data)
     }
