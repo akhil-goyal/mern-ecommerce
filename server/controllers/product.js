@@ -5,7 +5,7 @@ const _ = require('lodash');
 const { errorHandler } = require('./../helpers/dbErrorHandler');
 
 exports.productById = (req, res, next, id) => {
-    Product.findById(id).exec((err, product) => {
+    Product.findById(id).populate("category").exec((err, product) => {
         if (err || !product) {
             return res.status(400).json({
                 error: "Product not found!"
@@ -239,26 +239,26 @@ exports.photo = (req, res, next) => {
     next();
 }
 
-exports.listSearch = (req,res) => {
+exports.listSearch = (req, res) => {
     // Create query object to hold search & category values.
     const query = {}
 
     // Assign search value to query.name
-    if(req.query.search){
-        query.name = {$regex: req.query.search, $options: 'i'}
+    if (req.query.search) {
+        query.name = { $regex: req.query.search, $options: 'i' }
 
         // Assign category value to query.category
-        if(req.query.category && req.query.category != 'All'){
+        if (req.query.category && req.query.category != 'All') {
             query.category = req.query.category;
         }
 
         // Find the product on basis of query object
-        Product.find(query, (err,products) => {
-            if(err){
+        Product.find(query, (err, products) => {
+            if (err) {
                 return res.status(400).json({
                     error: errorHandler(err)
                 })
-            } 
+            }
             res.json(products);
         }).select('-photo')
     }
