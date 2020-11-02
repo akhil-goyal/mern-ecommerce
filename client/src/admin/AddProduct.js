@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { createProduct, getCategories } from './apiAdmin';
 
 const AddProduct = () => {
+
     const [values, setValues] = useState({
         name: '',
         description: '',
@@ -22,6 +23,7 @@ const AddProduct = () => {
     });
 
     const { user, token } = isAuthenticated();
+
     const {
         name,
         description,
@@ -57,19 +59,29 @@ const AddProduct = () => {
     }, []);
 
     const handleChange = name => event => {
+
         const value = name === 'photo' ? event.target.files[0] : event.target.value;
+
         formData.set(name, value);
+
         setValues({ ...values, [name]: value });
+
     };
 
     const clickSubmit = event => {
+
         event.preventDefault();
+
         setValues({ ...values, error: '', loading: true });
 
         createProduct(user._id, token, formData).then(data => {
+
             if (data.error) {
+
                 setValues({ ...values, error: data.error });
+
             } else {
+                
                 setValues({
                     ...values,
                     name: '',
