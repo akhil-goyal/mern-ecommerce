@@ -238,3 +238,28 @@ exports.photo = (req, res, next) => {
     }
     next();
 }
+
+exports.listSearch = (req,res) => {
+    // Create query object to hold search & category values.
+    const query = {}
+
+    // Assign search value to query.name
+    if(req.query.search){
+        query.name = {$regex: req.query.search, $options: 'i'}
+
+        // Assign category value to query.category
+        if(req.query.category && req.query.category != 'All'){
+            query.category = req.query.category;
+        }
+
+        // Find the product on basis of query object
+        Product.find(query, (err,products) => {
+            if(err){
+                return res.status(400).json({
+                    error: errorHandler(err)
+                })
+            } 
+            res.json(products);
+        }).select('-photo')
+    }
+}
