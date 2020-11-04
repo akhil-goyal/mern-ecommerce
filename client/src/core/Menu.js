@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { isAuthenticated, signout } from './../auth/index';
+import { itemTotal } from './cartHelpers';
 
 const isActive = (history, path) => {
     if (history.location.pathname === path) {
@@ -21,10 +22,24 @@ const Menu = ({ history }) => (
                 <Link className="nav-link" style={isActive(history, '/shop')} to="/shop">Shop</Link>
             </li>
 
+            <li className="nav-item">
+                <Link
+                    className="nav-link"
+                    style={isActive(history, '/cart')}
+                    to="/cart"
+                >Cart <sup><small className="cart-badge">{itemTotal()}</small></sup>
+                </Link>
+            </li>
+
             {
                 isAuthenticated() && isAuthenticated().user.role === 0 && (
                     <li className="nav-item">
-                        <Link className="nav-link" style={isActive(history, '/user/dashboard')} to="/user/dashboard">Dashboard</Link>
+                        <Link
+                            className="nav-link"
+                            style={isActive(history, '/user/dashboard')}
+                            to="/user/dashboard"
+                        >Dashboard
+                        </Link>
                     </li>
                 )
             }
@@ -32,7 +47,12 @@ const Menu = ({ history }) => (
             {
                 isAuthenticated() && isAuthenticated().user.role === 1 && (
                     <li className="nav-item">
-                        <Link className="nav-link" style={isActive(history, '/admin/dashboard')} to="/admin/dashboard">Dashboard</Link>
+                        <Link
+                            className="nav-link"
+                            style={isActive(history, '/admin/dashboard')}
+                            to="/admin/dashboard"
+                        >Dashboard
+                        </Link>
                     </li>
                 )
             }
