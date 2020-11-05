@@ -1,45 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import Layout from './Layout';
-import { getProducts } from './../core/apiCore';
+import { getProducts } from './apiCore';
 import Card from './Card';
 import Search from './Search';
 
 const Home = () => {
-
-    const [productsBySell, setProductsBySell] = useState([])
-    const [productsByArrival, setProductsByArrival] = useState([])
-    const [error, setError] = useState(false)
+    const [productsBySell, setProductsBySell] = useState([]);
+    const [productsByArrival, setProductsByArrival] = useState([]);
+    const [error, setError] = useState(false);
 
     const loadProductsBySell = () => {
         getProducts('sold').then(data => {
             if (data.error) {
-                setError(data.error)
+                setError(data.error);
             } else {
-                setProductsBySell(data)
+                setProductsBySell(data);
             }
-        })
-    }
+        });
+    };
 
     const loadProductsByArrival = () => {
         getProducts('createdAt').then(data => {
+            console.log(data);
             if (data.error) {
-                setError(data.error)
+                setError(data.error);
             } else {
-                setProductsByArrival(data)
+                setProductsByArrival(data);
             }
-        })
-    }
+        });
+    };
 
     useEffect(() => {
-        loadProductsBySell()
-        loadProductsByArrival()
-    }, [])
+        loadProductsByArrival();
+        loadProductsBySell();
+    }, []);
 
     return (
-        <Layout className="container-fluid" title="Home Page" description="Node React E-commerce App">
-
+        <Layout
+            title="FullStack React Node MongoDB Ecommerce App"
+            description="Node React E-commerce App"
+            className="container-fluid"
+        >
             <Search />
-
             <h2 className="mb-4">New Arrivals</h2>
             <div className="row">
                 {productsByArrival.map((product, i) => (
@@ -57,8 +59,8 @@ const Home = () => {
                     </div>
                 ))}
             </div>
-
         </Layout>
-    )
-}
+    );
+};
+
 export default Home;

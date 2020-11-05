@@ -1,3 +1,4 @@
+// Server-side validation for user sign-up.
 exports.userSignupValidator = (req, res, next) => {
     req.check('name', 'Name is a mandatory field.').notEmpty()
     req.check('email', 'Email must be between 3 to 32 characters.')

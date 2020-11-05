@@ -1,11 +1,19 @@
-const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+const User = require('../models/user');
 const expressJwt = require('express-jwt');
 const { errorHandler } = require('../helpers/dbErrorHandler');
 
+// To register a new user.
 exports.signup = ((req, res) => {
+
+    // Creating instance of user model & storing user data
+    // received from client-side with req.body
     const user = new User(req.body);
+
+
+    // Saving the user data received.
     user.save((err, user) => {
+
         if (err) {
             return res.status(400).json({
                 err: errorHandler(err)
@@ -17,17 +25,26 @@ exports.signup = ((req, res) => {
         user.salt = undefined;
         user.hashedPassword = undefined;
 
+        // Returning the newly signed up user data
         res.json({
             user
         });
+
     })
 });
 
+
+// To log in for a registered user.
 exports.signin = ((req, res) => {
-    // Finding user on the basis of email
+
+    // Destructuring email & password from req.body
     const { email, password } = req.body;
 
+    // Finding user on the basis of email address
     User.findOne({ email }, (err, user) => {
+
+        // If there is an error or there is no user
+        // associated to the email provided.
         if (err || !user) {
             return res.status(400).json({
                 error: "No user found. Please signup!"
@@ -41,32 +58,47 @@ exports.signin = ((req, res) => {
             })
         }
 
-        // Generating a signed token with user id and jwt secret
+        // Generating a signed token using user id and jwt secret
         const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET)
 
         // Persisting the token as 't' in cookie with expiry date.
         res.cookie('t', token, { expire: new Date() + 9999 })
 
-        // Return the response with user and token to the client-side.
         const { _id, name, email, role } = user;
+
+        // Returning the response with user and token to the client-side.
         return res.json({ token, user: { _id, email, name, role } })
     })
+
 });
 
+// To sign out for a logged in user.
 exports.signout = ((req, res) => {
+
+    // Destroying the token by clearing the cookie.
     res.clearCookie('t')
+
+    // Successful response for client-side.
     res.json({
         message: "User logged out!"
     })
+
 })
 
+
+// ------------------------------------ MIDDLEWARES ------------------------------------
+
+
+// Middleware to allow resource access to SIGNED IN users only.
 exports.requireSignin = expressJwt({
     secret: process.env.JWT_SECRET,
     algorithms: ["HS256"],
     userProperty: "auth",
 });
 
-exports.isAuth = (req, res, next) => {
+// Middleware to allow resource access to AUTHENTICATED/AUTHORIZED users only.
+exports.isAuthenticated = (req, res, next) => {
+
     let user = req.profile && req.auth && req.profile._id == req.auth._id
 
     if (!user) {
@@ -78,11 +110,20 @@ exports.isAuth = (req, res, next) => {
     next();
 };
 
+// Middleware to allow resource access to ADMINISTRATOR only.
 exports.isAdmin = (req, res, next) => {
+
+    // Checking the role.
+    // Admin = 1
+    // User = 0
     if (req.profile.role === 0) {
+
         return res.status(403).json({
             error: "Admin resource! Access Denied!!!!"
         });
+
     }
+
     next();
 }
+// -------------------------------------------------------------------------------------

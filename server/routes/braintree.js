@@ -1,12 +1,17 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { requireSignin, isAuth } = require('../controllers/auth');
-const { userById } = require('../controllers/user');
-const { generateToken, processPayment } = require('../controllers/braintree');
 
-router.get('/braintree/getToken/:userId', requireSignin, isAuth, generateToken);
-router.post('/braintree/payment/:userId', requireSignin, isAuth, processPayment);
+const { userById } = require("../controllers/user");
+const { requireSignin, isAuthenticated } = require("../controllers/auth");
+const { generateToken, processPayment } = require("../controllers/braintree");
 
-router.param('userId', userById);
+// To generate token on the basis of client verification.
+router.get("/braintree/getToken/:userId", requireSignin, isAuthenticated, generateToken);
 
-module.exports = router
+// To process the payment when payment info received from the client-side.
+router.post("/braintree/payment/:userId", requireSignin, isAuthenticated, processPayment);
+
+// Fetch user data using User ID from Parameters.
+router.param("userId", userById);
+
+module.exports = router;

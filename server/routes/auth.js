@@ -1,11 +1,20 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const { signup, signin, signout, requireSignin } = require('./../controllers/auth');
-const { userSignupValidator } = require('../validator');
+const {
+    signup,
+    signin,
+    signout
+} = require("../controllers/auth");
+const { userSignupValidator } = require("../validator");
 
-router.post('/signup', userSignupValidator, signup);
-router.post('/signin', signin);
-router.get('/signout', signout);
+// To register a new user.
+router.post("/signup", userSignupValidator, signup);
+
+// To log in for a registered user.
+router.post("/signin", signin);
+
+// To sign out for a logged in user.
+router.get("/signout", signout);
 
 module.exports = router;

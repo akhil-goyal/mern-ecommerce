@@ -1,21 +1,15 @@
-import React from 'react';
-import { API } from '../config';
+import React from "react";
+import { API } from "../config";
 
-const ShowImage = ({ item, url }) => {
-
-    return (
-        <div className="product-image">
-
+const ShowImage = ({ item, url }) => (
+    <div className="product-img">
         <img
-            style={{ maxHeight: '100%', maxWidth: '100%' }}
-            className="mb-3"
-            alt={item.name}
             src={`${API}/${url}/photo/${item._id}`}
+            alt={item.name}
+            className="mb-3"
+            style={{ maxHeight: "100%", maxWidth: "100%" }}
         />
-
     </div>
-    )
-
-}
+);
 
 export default ShowImage;
