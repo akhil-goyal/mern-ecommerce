@@ -18,7 +18,7 @@ const {
 
 const { userById } = require("../controllers/user");
 
-const { requireSignin, isAuthenticated, isAdmin } = require("../controllers/auth");
+const { requireSignin, isAuthenticated, isAdmin } = require("./../middlewares/index");
 
 // To get list of all products.
 router.get("/products", listProducts);

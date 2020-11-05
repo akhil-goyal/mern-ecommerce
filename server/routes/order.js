@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { decreaseQuantity } = require("../controllers/product");
 const { userById, addOrderToUserHistory } = require("../controllers/user");
-const { requireSignin, isAuthenticated, isAdmin } = require("../controllers/auth");
+const { requireSignin, isAuthenticated, isAdmin } = require("./../middlewares/index");
 const { createOrder, listOrders, getStatusValues, orderById, updateOrderStatus } = require("../controllers/order");
 
 // To create a new order.

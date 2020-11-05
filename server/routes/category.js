@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { userById } = require('../controllers/user');
-const { requireSignin, isAuthenticated, isAdmin } = require('../controllers/auth');
+const { requireSignin, isAuthenticated, isAdmin } = require("./../middlewares/index");
 const { createCategory, categoryById, fetchCategory, updateCategory, deleteCategory, listCategories } = require('../controllers/category');
 
 // To get a list of all categories.

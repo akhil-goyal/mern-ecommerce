@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { requireSignin, isAuthenticated } = require('../controllers/auth');
+const { requireSignin, isAuthenticated } = require("./../middlewares/index");
 
 const { userById, getProfile, updateProfile, userPurchaseHistory } = require('../controllers/user');
 

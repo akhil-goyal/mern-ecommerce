@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { userById } = require("../controllers/user");
-const { requireSignin, isAuthenticated } = require("../controllers/auth");
+const { requireSignin, isAuthenticated } = require("./../middlewares/index");
 const { generateToken, processPayment } = require("../controllers/braintree");
 
 // To generate token on the basis of client verification.
