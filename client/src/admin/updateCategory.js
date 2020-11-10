@@ -44,7 +44,7 @@ const UpdateCategory = ({ match }) => {
                 // Updating the error state.
                 setValues({ ...values, error: data.error });
 
-            // If the category has been fetched successfully.
+                // If the category has been fetched successfully.
             } else {
                 // Updating the state.
                 setValues({
@@ -102,7 +102,7 @@ const UpdateCategory = ({ match }) => {
                 // Updating error state
                 setValues({ ...values, error: data.error });
 
-            // If the category has been updated successfully.
+                // If the category has been updated successfully.
             } else {
 
                 // Updating the state
@@ -148,13 +148,13 @@ const UpdateCategory = ({ match }) => {
                         Save Changes
                     </button>
                 </div>
-                
+
             </form>
 
         </div>
 
     );
-    
+
     // It will return if the error state is not null.
     const showError = () => (
         <div className={'alert alert-danger'} role="alert" style={{ display: error ? '' : 'none' }}>

@@ -1,3 +1,5 @@
+// Fixed prices to be used for filtering the product
+// based on their price.
 export const prices = [
     {
         _id: 0,

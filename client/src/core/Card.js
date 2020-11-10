@@ -1,9 +1,16 @@
+// Packages
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import ShowImage from './ShowImage';
 import moment from 'moment';
+
+// Components
+import ShowImage from './ShowImage';
+
+// Methods
 import { addItem, updateItem, removeItem } from './cartHelpers';
 
+
+// Reusable card component.
 const Card = ({
   product,
   showViewProductButton = true,
@@ -12,11 +19,15 @@ const Card = ({
   showRemoveProductButton = false,
   setRun = f => f,
   run = undefined
-  // changeCartSize
 }) => {
+
+  // Using React Hooks to set the states associated
+  // to the Card.
   const [redirect, setRedirect] = useState(false);
   const [count, setCount] = useState(product.count);
 
+  // This will return the view button depending upon the props
+  // received from its parent component.
   const showViewButton = showViewProductButton => {
     return (
       showViewProductButton && (
@@ -26,17 +37,25 @@ const Card = ({
       )
     );
   };
+
+  // Function to add an item to the cart.
   const addToCart = () => {
-    // console.log('added');
+
+    // Calling API addItem to add product to the cart.
+    // Setting redirect to true so that redirection 
+    // takes place once an item has been added.
     addItem(product, setRedirect(true));
   };
 
+  // Function to redirect on the basis of redirect state.
   const shouldRedirect = redirect => {
     if (redirect) {
       return <Redirect to="/cart" />;
     }
   };
 
+  // This will return the "Add to cart" button depending 
+  // upon the props received from its parent component.
   const showAddToCartBtn = showAddToCartButton => {
     return (
       showAddToCartButton && (
@@ -47,22 +66,37 @@ const Card = ({
     );
   };
 
+  // Function to return the number of products available.
+  // If available, it will return the quantity, else, it
+  // will display Out of Stock.
   const showStock = quantity => {
     return quantity > 0 ? (
       <span className="badge badge-primary badge-pill">In Stock </span>
     ) : (
-      <span className="badge badge-primary badge-pill">Out of Stock </span>
-    );
+        <span className="badge badge-primary badge-pill">Out of Stock </span>
+      );
   };
 
+  // This method listens for any change in input values.
+  // Using a HIGHER ORDER FUNCTION, ie, a function returning an
+  // another function. 'event' represents synthetic browser events.
   const handleChange = productId => event => {
+
+    // It will ensure that useEffect runs in its parent component, Cart in this case.
     setRun(!run); // run useEffect in parent Cart
+
+    // Ensuring that the value entered by user is not 0.
     setCount(event.target.value < 1 ? 1 : event.target.value);
+
+    // Updating the product count.
     if (event.target.value >= 1) {
       updateItem(productId, event.target.value);
     }
+
   };
 
+  // This will return the "Update Cart" option depending 
+  // upon the props received from its parent component.
   const showCartUpdateOptions = cartUpdate => {
     return (
       cartUpdate && (
@@ -77,13 +111,20 @@ const Card = ({
       )
     );
   };
+
+  // This will return the "Remove" button depending 
+  // upon the props received from its parent component.
   const showRemoveButton = showRemoveProductButton => {
     return (
       showRemoveProductButton && (
         <button
           onClick={() => {
+
             removeItem(product._id);
-            setRun(!run); // run useEffect in parent Cart
+
+            // It will ensure that useEffect runs in its parent component, Cart in this case.
+            setRun(!run);
+
           }}
           className="btn btn-outline-danger mt-2 mb-2"
         >

@@ -1,9 +1,17 @@
+// Packages
 import React, { Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
+
+// Methods
 import { signout, isAuthenticated } from "../auth";
 import { itemTotal } from "./cartHelpers";
 
+
+// Checking for active/inactive links.
+// Takes history & path as arguemnts.
 const isActive = (history, path) => {
+
+    // Matcing the current path.
     if (history.location.pathname === path) {
         return { color: "#ff9900" };
     } else {
@@ -13,7 +21,9 @@ const isActive = (history, path) => {
 
 const Menu = ({ history }) => (
     <div>
+
         <ul className="nav nav-tabs bg-primary">
+
             <li className="nav-item">
                 <Link
                     className="nav-link"
@@ -96,7 +106,9 @@ const Menu = ({ history }) => (
             )}
 
             {isAuthenticated() && (
+
                 <li className="nav-item">
+
                     <span
                         className="nav-link"
                         style={{ cursor: "pointer", color: "#ffffff" }}

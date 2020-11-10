@@ -50,8 +50,14 @@ export const signin = user => {
 
 export const authenticate = (data, next) => {
 
+    // Checking, if the code will run in web-page
+    // inside a web browser or not.
     if (typeof window !== 'undefined') {
+
+        // Setting authenticated user's data in local storage.
         localStorage.setItem('jwt', JSON.stringify(data));
+
+        // Callback function.
         next();
     }
 };
