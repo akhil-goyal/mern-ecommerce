@@ -4,7 +4,7 @@ import { Link, withRouter } from "react-router-dom";
 
 // Methods
 import { signout, isAuthenticated } from "../auth";
-import { itemTotal } from "./cartHelpers";
+import { cartTotal } from "./cartHelpers";
 
 
 // Checking for active/inactive links.
@@ -13,16 +13,29 @@ const isActive = (history, path) => {
 
     // Matcing the current path.
     if (history.location.pathname === path) {
-        return { color: "#ff9900" };
+        return { color: "#fff", textDecoration: 'underline' };
     } else {
         return { color: "#ffffff" };
     }
 };
 
 const Menu = ({ history }) => (
+
     <div>
 
-        <ul className="nav nav-tabs bg-primary">
+        <ul className="nav nav-tabs header">
+
+            {isAuthenticated() && (
+
+                <li className="nav-item">
+                    <span
+                        className="nav-link"
+                        style={{ color: "#fff" }}
+                    >
+                        Welcome, {isAuthenticated().user.name}.
+                    </span>
+                </li>
+            )}
 
             <li className="nav-item">
                 <Link
@@ -30,7 +43,7 @@ const Menu = ({ history }) => (
                     style={isActive(history, "/")}
                     to="/"
                 >
-                    Home
+                    Dashboard
                 </Link>
             </li>
 
@@ -44,19 +57,6 @@ const Menu = ({ history }) => (
                 </Link>
             </li>
 
-            <li className="nav-item">
-                <Link
-                    className="nav-link"
-                    style={isActive(history, "/cart")}
-                    to="/cart"
-                >
-                    Cart{" "}
-                    <sup>
-                        <small className="cart-badge">{itemTotal()}</small>
-                    </sup>
-                </Link>
-            </li>
-
             {isAuthenticated() && isAuthenticated().user.role === 0 && (
                 <li className="nav-item">
                     <Link
@@ -64,7 +64,7 @@ const Menu = ({ history }) => (
                         style={isActive(history, "/user/dashboard")}
                         to="/user/dashboard"
                     >
-                        Dashboard
+                        Account
                     </Link>
                 </li>
             )}
@@ -76,10 +76,23 @@ const Menu = ({ history }) => (
                         style={isActive(history, "/admin/dashboard")}
                         to="/admin/dashboard"
                     >
-                        Dashboard
+                        Account
                     </Link>
                 </li>
             )}
+
+            <li className="nav-item">
+                <Link
+                    className="nav-link"
+                    style={isActive(history, "/cart")}
+                    to="/cart"
+                >
+                    <i class="fas fa-shopping-cart"></i>{" "}
+                    <sup>
+                        <small className="cart-badge">{cartTotal()}</small>
+                    </sup>
+                </Link>
+            </li>
 
             {!isAuthenticated() && (
                 <Fragment>
@@ -122,6 +135,7 @@ const Menu = ({ history }) => (
                     </span>
                 </li>
             )}
+
         </ul>
     </div>
 );

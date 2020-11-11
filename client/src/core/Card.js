@@ -7,7 +7,7 @@ import moment from 'moment';
 import ShowImage from './ShowImage';
 
 // Methods
-import { addItem, updateItem, removeItem } from './cartHelpers';
+import { addToCart, updateCartData, removeCartItem } from './cartHelpers';
 
 
 // Reusable card component.
@@ -32,19 +32,19 @@ const Card = ({
     return (
       showViewProductButton && (
         <Link to={`/product/${product._id}`} className="mr-2">
-          <button className="btn btn-outline-primary mt-2 mb-2 card-btn-1">View Product</button>
+          <button className="btn btn-outline-danger mt-2 mb-2 card-btn-1">View Product</button>
         </Link>
       )
     );
   };
 
   // Function to add an item to the cart.
-  const addToCart = () => {
+  const addProductToCart = () => {
 
-    // Calling API addItem to add product to the cart.
+    // Calling API addToCart to add product to the cart.
     // Setting redirect to true so that redirection 
     // takes place once an item has been added.
-    addItem(product, setRedirect(true));
+    addToCart(product, setRedirect(true));
   };
 
   // Function to redirect on the basis of redirect state.
@@ -59,7 +59,7 @@ const Card = ({
   const showAddToCartBtn = showAddToCartButton => {
     return (
       showAddToCartButton && (
-        <button onClick={addToCart} className="btn btn-outline-warning mt-2 mb-2 card-btn-1  ">
+        <button onClick={addProductToCart} className="btn btn-outline-dark mt-2 mb-2 card-btn-1  ">
           Add to cart
         </button>
       )
@@ -71,9 +71,9 @@ const Card = ({
   // will display Out of Stock.
   const showStock = quantity => {
     return quantity > 0 ? (
-      <span className="badge badge-primary badge-pill">In Stock </span>
+      <span className="badge badge-dark badge-pill">In Stock </span>
     ) : (
-        <span className="badge badge-primary badge-pill">Out of Stock </span>
+        <span className="badge badge-danger badge-pill">Out of Stock </span>
       );
   };
 
@@ -90,7 +90,7 @@ const Card = ({
 
     // Updating the product count.
     if (event.target.value >= 1) {
-      updateItem(productId, event.target.value);
+      updateCartData(productId, event.target.value);
     }
 
   };
@@ -120,7 +120,7 @@ const Card = ({
         <button
           onClick={() => {
 
-            removeItem(product._id);
+            removeCartItem(product._id);
 
             // It will ensure that useEffect runs in its parent component, Cart in this case.
             setRun(!run);
@@ -134,15 +134,15 @@ const Card = ({
     );
   };
   return (
-    <div className="card ">
-      <div className="card-header card-header-1 ">{product.name}</div>
+    <div className="card">
+      <div className="card-header card-header-1 "><b>{product.name}</b></div>
       <div className="card-body">
         {shouldRedirect(redirect)}
         <ShowImage item={product} url="product" />
-        <p className="card-p  mt-2">{product.description.substring(0, 100)} </p>
-        <p className="card-p black-10">$ {product.price}</p>
+        <p className="card-p  mt-2">{product.description} </p>
+        <p className="card-p black-10">Price: ${product.price}</p>
         <p className="black-9">Category: {product.category && product.category.name}</p>
-        <p className="black-8">Added on {moment(product.createdAt).fromNow()}</p>
+        <p className="black-8">Added {moment(product.createdAt).fromNow()}</p>
         {showStock(product.quantity)}
         <br />
 

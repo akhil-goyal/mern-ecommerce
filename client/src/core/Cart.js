@@ -8,7 +8,7 @@ import Card from './Card';
 import Checkout from './Checkout';
 
 // Methods
-import { getCart } from './cartHelpers';
+import { getCartData } from './cartHelpers';
 
 
 // Functional Component to return the Cart.
@@ -26,7 +26,7 @@ const Cart = () => {
     // array as a second argument. The second argument may contain a state, 
     // upon a change in which, the useEffect can be run again.
     useEffect(() => {
-        setItems(getCart());
+        setItems(getCartData());
     }, [run]);
 
     // Function to retunr cart items.

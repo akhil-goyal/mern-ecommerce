@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import Card from "./Card";
 
 // Methods
-import { getCategories, list } from "./apiCore";
+import { getCategories, productsBySearch } from "./apiCore";
 
 
 // Functional Component for Search
@@ -62,7 +62,7 @@ const Search = () => {
         if (search) {
 
             // Making request to list API.
-            list({ search: search || undefined, category: category }).then(
+            productsBySearch({ search: search || undefined, category: category }).then(
 
                 response => {
 
@@ -141,7 +141,7 @@ const Search = () => {
 
         <form onSubmit={searchSubmit}>
 
-            <span className="input-group-text">
+            <span className="input-group-text search-bar">
 
                 <div className="input-group input-group-lg">
 

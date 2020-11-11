@@ -28,7 +28,6 @@ exports.orderById = (req, res, next, id) => {
         });
 };
 
-// *************
 // To create a new order.
 exports.createOrder = (req, res) => {
 

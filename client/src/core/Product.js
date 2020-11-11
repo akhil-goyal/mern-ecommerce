@@ -6,7 +6,7 @@ import Layout from './Layout';
 import Card from './Card';
 
 // Methods
-import { read, listRelated } from './apiCore';
+import { getProductDetails, listRelatedProducts } from './apiCore';
 
 
 // Functional Component to return Product
@@ -23,8 +23,8 @@ const Product = props => {
     // Takes Product ID as argument.
     const loadSingleProduct = productId => {
 
-        // Making request to read API.
-        read(productId).then(data => {
+        // Making request to getProductDetails API.
+        getProductDetails(productId).then(data => {
 
             // If there's an error while fetching the product info.
             if (data.error) {
@@ -38,8 +38,8 @@ const Product = props => {
                 // Updating the product state.
                 setProduct(data);
 
-                // Making request to listRelated API
-                listRelated(data._id).then(data => {
+                // Making request to listRelatedProducts API
+                listRelatedProducts(data._id).then(data => {
 
                     // If there's an error while fetching the related 
                     // products.
@@ -77,13 +77,16 @@ const Product = props => {
     return (
         <Layout
             title={product && product.name}
-            description={product && product.description && product.description.substring(0, 100)}
+            description={product && product.description && product.description}
             className="container-fluid"
         >
 
             <div className="row">
 
                 <div className="col-8">
+
+                <h4>Product info</h4>
+
                     {product && product.description && <Card product={product} showViewProductButton={false} />}
                 </div>
 

@@ -65,7 +65,7 @@ export const getFilteredProducts = (skip, limit, filters = {}) => {
 };
 
 // Method to return products on the basis of search query.
-export const list = params => {
+export const productsBySearch = params => {
 
     // Using query-string package to send the search query as parameter
     // to the server.
@@ -84,7 +84,7 @@ export const list = params => {
 
 // Method to return details of a particular product.
 // Takes Product ID as argument.
-export const read = productId => {
+export const getProductDetails = productId => {
 
     return fetch(`${API}/product/${productId}`, {
         method: "GET"
@@ -99,7 +99,7 @@ export const read = productId => {
 
 // Method to return products related to the selected product.
 // Takes Product ID as argument.
-export const listRelated = productId => {
+export const listRelatedProducts = productId => {
 
     return fetch(`${API}/products/related/${productId}`, {
         method: "GET"

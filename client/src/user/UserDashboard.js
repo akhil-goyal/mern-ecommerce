@@ -168,8 +168,8 @@ const Dashboard = () => {
 
     return (
         <Layout
-            title="Dashboard"
-            description={`Hello, ${name}!`}
+            title="Account Settings"
+            description={'Manage your resources & personal information.'}
             className="container-fluid"
         >
             <div className="row">

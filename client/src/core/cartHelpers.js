@@ -1,7 +1,7 @@
 // Method to add a product to the cart.
 // Takes an item (by default, an empty array), product count (by default, 0),
 // callback function as arguments.
-export const addItem = (item = [], count = 0, next = f => f) => {
+export const addToCart = (item = [], count = 0, next = f => f) => {
 
     // An empty cart array.
     let cart = [];
@@ -46,7 +46,7 @@ export const addItem = (item = [], count = 0, next = f => f) => {
 
 // Method to calculate the total number of products 
 // inside the cart.
-export const itemTotal = () => {
+export const cartTotal = () => {
 
     // Checking, if the code will run in web-page
     // inside a web browser or not.
@@ -66,7 +66,7 @@ export const itemTotal = () => {
 
 
 // Method to return the cart data.
-export const getCart = () => {
+export const getCartData = () => {
 
     // Checking, if the code will run in web-page
     // inside a web browser or not.
@@ -87,7 +87,7 @@ export const getCart = () => {
 
 // Method to update the cart.
 // Takes Product ID & count as arguments.
-export const updateItem = (productId, count) => {
+export const updateCartData = (productId, count) => {
 
     // An empty cart array.
     let cart = [];
@@ -120,7 +120,7 @@ export const updateItem = (productId, count) => {
 
 // Method to remove an item from the cart.
 // Takes Product ID as argument.
-export const removeItem = productId => {
+export const removeCartItem = productId => {
 
     // An empty cart array.
     let cart = [];

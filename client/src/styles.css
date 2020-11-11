@@ -1,3 +1,44 @@
+.header
+{
+    background-color: black;
+    border-bottom: 0px;
+}
+
+.card
+{
+    text-align: center;
+}
+
+.card-header
+{
+    font-size: 20px;
+}
+
+.container-fluid
+{
+    padding: 0em 5em;
+}
+
+.product-image
+{
+    height: 250px;
+    width: 200px;
+    border: 3px solid black;
+}
+
+.best-sellers
+{
+    margin-top: 80px;
+}
+
+.search-bar
+{
+    background-color: #00000094;
+}
+
+.card {
+    border: 1px solid #000;
+}
 /**
  * border radius
  */
@@ -72,9 +113,11 @@
 
 .jumbotron {
     height: 180px;
-    color: #fff;
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    color: #000;
+    margin-top: 2rem;
+    /* background: linear-gradient(-45deg, #000, #242424, #555555, #777777); */
     background-size: 400% 400%;
+    border: 1px solid #000;
     -webkit-animation: Gradient 15s ease infinite;
     -moz-animation: Gradient 15s ease infinite;
     animation: Gradient 15s ease infinite;

@@ -73,8 +73,8 @@ const Home = () => {
 
     return (
         <Layout
-            title="FullStack React Node MongoDB Ecommerce App"
-            description="Node React E-commerce App"
+            title="SHOPERAH"
+            description="Your one stop shop."
             className="container-fluid"
         >
 
@@ -90,7 +90,7 @@ const Home = () => {
                 ))}
             </div>
 
-            <h2 className="mb-4">Best Sellers</h2>
+            <h2 className="mb-4 best-sellers">Best Sellers</h2>
 
             <div className="row">
                 {productsBySell.map((product, i) => (

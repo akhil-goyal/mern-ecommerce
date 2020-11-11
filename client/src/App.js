@@ -21,7 +21,7 @@ import ManageProducts from './admin/ManageProducts';
 import UpdateProduct from './admin/UpdateProduct';
 import UpdateCategory from './admin/updateCategory';
 
-const Routes = () => {
+const App = () => {
     return (
         <BrowserRouter>
 
@@ -54,4 +54,4 @@ const Routes = () => {
     );
 };
 
-export default Routes;
+export default App;
